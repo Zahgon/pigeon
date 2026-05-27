@@ -5,13 +5,6 @@
 // the generated parser.
 package ast
 
-import (
-	"bytes"
-	"fmt"
-	"strconv"
-	"strings"
-)
-
 // Pos represents a position in a source file.
 type Pos struct {
 	Filename string
@@ -21,12 +14,7 @@ type Pos struct {
 }
 
 // String returns the textual representation of a position.
-func (p Pos) String() string {
-	if p.Filename != "" {
-		return fmt.Sprintf("%s:%d:%d (%d)", p.Filename, p.Line, p.Col, p.Off)
-	}
-	return fmt.Sprintf("%d:%d (%d)", p.Line, p.Col, p.Off)
-}
+func (p Pos) String() string { _ = "STUB: not implemented"; return "" }
 
 // Grammar is the top-level node of the AST for the PEG grammar.
 type Grammar struct {
@@ -38,40 +26,29 @@ type Grammar struct {
 var _ Expression = (*Grammar)(nil)
 
 // NewGrammar creates a new grammar at the specified position.
-func NewGrammar(p Pos) *Grammar {
-	return &Grammar{p: p}
-}
+func NewGrammar(p Pos) *Grammar { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (g *Grammar) Pos() Pos { return g.p }
+func (g *Grammar) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (g *Grammar) String() string {
-	var buf bytes.Buffer
-
-	fmt.Fprintf(&buf, "%s: %T{Init: %v, Rules: [\n",
-		g.p, g, g.Init)
-	for _, r := range g.Rules {
-		fmt.Fprintf(&buf, "%s,\n", r)
-	}
-	buf.WriteString("]}")
-	return buf.String()
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (g *Grammar) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (g *Grammar) NullableVisit(rules map[string]*Rule) bool {
-	panic("NullableVisit should not be called on the Grammar")
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsNullable returns the nullable attribute of the node.
-func (g *Grammar) IsNullable() bool {
-	panic("IsNullable should not be called on the Grammar")
-}
+func (g *Grammar) IsNullable() bool { _ = "STUB: not implemented"; return false }
 
 // InitialNames returns names of nodes with which an expression can begin.
-func (g *Grammar) InitialNames() map[string]struct{} {
-	panic("InitialNames should not be called on the Grammar")
-}
+func (g *Grammar) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // Rule represents a rule in the PEG grammar. It has a name, an optional
 // display name to be used in error messages, and an expression.
@@ -92,40 +69,35 @@ var _ Expression = (*Rule)(nil)
 
 // NewRule creates a rule with at the specified position and with the
 // specified name as identifier.
-func NewRule(p Pos, name *Identifier) *Rule {
-	return &Rule{p: p, Name: name}
-}
+func NewRule(p Pos, name *Identifier) *Rule { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (r *Rule) Pos() Pos { return r.p }
+func (r *Rule) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (r *Rule) String() string {
-	return fmt.Sprintf("%s: %T{Name: %v, DisplayName: %v, Expr: %v}",
-		r.p, r, r.Name, r.DisplayName, r.Expr)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (r *Rule) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (r *Rule) NullableVisit(rules map[string]*Rule) bool {
-	if r.Visited {
-		// A left-recursive rule is considered non-nullable.
-		return false
-	}
-	r.Visited = true
-	r.Nullable = r.Expr.NullableVisit(rules)
-	r.Visited = false
-	return r.Nullable
+	_ = "STUB: not implemented"
+
+	// A left-recursive rule is considered non-nullable.
+	return false
 }
 
 // IsNullable returns the nullable attribute of the node.
 func (r *Rule) IsNullable() bool {
-	return r.Nullable
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (r *Rule) InitialNames() map[string]struct{} {
-	return r.Expr.InitialNames()
-}
+func (r *Rule) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // Expression is the interface implemented by all expression types.
 type Expression interface {
@@ -150,52 +122,33 @@ type ChoiceExpr struct {
 var _ Expression = (*ChoiceExpr)(nil)
 
 // NewChoiceExpr creates a choice expression at the specified position.
-func NewChoiceExpr(p Pos) *ChoiceExpr {
-	return &ChoiceExpr{p: p}
-}
+func NewChoiceExpr(p Pos) *ChoiceExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (c *ChoiceExpr) Pos() Pos { return c.p }
+func (c *ChoiceExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (c *ChoiceExpr) String() string {
-	var buf bytes.Buffer
-
-	fmt.Fprintf(&buf, "%s: %T{Alternatives: [\n", c.p, c)
-	for _, e := range c.Alternatives {
-		fmt.Fprintf(&buf, "%s,\n", e)
-	}
-	buf.WriteString("]}")
-	return buf.String()
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (c *ChoiceExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (c *ChoiceExpr) NullableVisit(rules map[string]*Rule) bool {
-	for _, alt := range c.Alternatives {
-		if alt.NullableVisit(rules) {
-			c.Nullable = true
-			return true
-		}
-	}
-	c.Nullable = false
+	_ = "STUB: not implemented"
 	return false
 }
 
 // IsNullable returns the nullable attribute of the node.
 func (c *ChoiceExpr) IsNullable() bool {
-	return c.Nullable
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (c *ChoiceExpr) InitialNames() map[string]struct{} {
-	names := make(map[string]struct{})
-	for _, alt := range c.Alternatives {
-		for name := range alt.InitialNames() {
-			names[name] = struct{}{}
-		}
-	}
-	return names
-}
+func (c *ChoiceExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // FailureLabel is an identifier, which can by thrown and recovered in a grammar.
 type FailureLabel string
@@ -215,48 +168,33 @@ type RecoveryExpr struct {
 var _ Expression = (*RecoveryExpr)(nil)
 
 // NewRecoveryExpr creates a choice expression at the specified position.
-func NewRecoveryExpr(p Pos) *RecoveryExpr {
-	return &RecoveryExpr{p: p}
-}
+func NewRecoveryExpr(p Pos) *RecoveryExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (r *RecoveryExpr) Pos() Pos { return r.p }
+func (r *RecoveryExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (r *RecoveryExpr) String() string {
-	var buf bytes.Buffer
-
-	fmt.Fprintf(&buf, "%s: %T{Expr: %v, RecoverExpr: %v", r.p, r, r.Expr, r.RecoverExpr)
-	buf.WriteString(", Labels: [\n")
-	for _, e := range r.Labels {
-		fmt.Fprintf(&buf, "%s,\n", e)
-	}
-	buf.WriteString("]}")
-	return buf.String()
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (r *RecoveryExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (r *RecoveryExpr) NullableVisit(rules map[string]*Rule) bool {
-	r.Nullable = r.Expr.NullableVisit(rules) || r.RecoverExpr.NullableVisit(rules)
-	return r.Nullable
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsNullable returns the nullable attribute of the node.
 func (r *RecoveryExpr) IsNullable() bool {
-	return r.Nullable
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (r *RecoveryExpr) InitialNames() map[string]struct{} {
-	names := make(map[string]struct{})
-	for name := range r.Expr.InitialNames() {
-		names[name] = struct{}{}
-	}
-	for name := range r.RecoverExpr.InitialNames() {
-		names[name] = struct{}{}
-	}
-	return names
-}
+func (r *RecoveryExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // ActionExpr is an expression that has an associated block of code to
 // execute when the expression matches.
@@ -272,37 +210,33 @@ type ActionExpr struct {
 var _ Expression = (*ActionExpr)(nil)
 
 // NewActionExpr creates a new action expression at the specified position.
-func NewActionExpr(p Pos) *ActionExpr {
-	return &ActionExpr{p: p}
-}
+func NewActionExpr(p Pos) *ActionExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (a *ActionExpr) Pos() Pos { return a.p }
+func (a *ActionExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (a *ActionExpr) String() string {
-	return fmt.Sprintf("%s: %T{Expr: %v, Code: %v}", a.p, a, a.Expr, a.Code)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (a *ActionExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (a *ActionExpr) NullableVisit(rules map[string]*Rule) bool {
-	a.Nullable = a.Expr.NullableVisit(rules)
-	return a.Nullable
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsNullable returns the nullable attribute of the node.
 func (a *ActionExpr) IsNullable() bool {
-	return a.Nullable
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (a *ActionExpr) InitialNames() map[string]struct{} {
-	names := make(map[string]struct{})
-	for name := range a.Expr.InitialNames() {
-		names[name] = struct{}{}
-	}
-	return names
-}
+func (a *ActionExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // ThrowExpr is an expression that throws an FailureLabel to be caught by a
 // RecoveryChoiceExpr.
@@ -314,32 +248,34 @@ type ThrowExpr struct {
 var _ Expression = (*ThrowExpr)(nil)
 
 // NewThrowExpr creates a new throw expression at the specified position.
-func NewThrowExpr(p Pos) *ThrowExpr {
-	return &ThrowExpr{p: p}
-}
+func NewThrowExpr(p Pos) *ThrowExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (t *ThrowExpr) Pos() Pos { return t.p }
+func (t *ThrowExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (t *ThrowExpr) String() string {
-	return fmt.Sprintf("%s: %T{Label: %v}", t.p, t, t.Label)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (t *ThrowExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (t *ThrowExpr) NullableVisit(rules map[string]*Rule) bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// IsNullable returns the nullable attribute of the node.
+	return false
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (t *ThrowExpr) IsNullable() bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (t *ThrowExpr) InitialNames() map[string]struct{} {
-	return make(map[string]struct{})
-}
+func (t *ThrowExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // SeqExpr is an ordered sequence of expressions, all of which must match
 // if the SeqExpr is to be a match itself.
@@ -353,55 +289,33 @@ type SeqExpr struct {
 var _ Expression = (*SeqExpr)(nil)
 
 // NewSeqExpr creates a new sequence expression at the specified position.
-func NewSeqExpr(p Pos) *SeqExpr {
-	return &SeqExpr{p: p}
-}
+func NewSeqExpr(p Pos) *SeqExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (s *SeqExpr) Pos() Pos { return s.p }
+func (s *SeqExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (s *SeqExpr) String() string {
-	var buf bytes.Buffer
-
-	fmt.Fprintf(&buf, "%s: %T{Exprs: [\n", s.p, s)
-	for _, e := range s.Exprs {
-		fmt.Fprintf(&buf, "%s,\n", e)
-	}
-	buf.WriteString("]}")
-	return buf.String()
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (s *SeqExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (s *SeqExpr) NullableVisit(rules map[string]*Rule) bool {
-	for _, item := range s.Exprs {
-		if !item.NullableVisit(rules) {
-			s.Nullable = false
-			return false
-		}
-	}
-	s.Nullable = true
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsNullable returns the nullable attribute of the node.
 func (s *SeqExpr) IsNullable() bool {
-	return s.Nullable
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (s *SeqExpr) InitialNames() map[string]struct{} {
-	names := make(map[string]struct{})
-	for _, item := range s.Exprs {
-		for name := range item.InitialNames() {
-			names[name] = struct{}{}
-		}
-		if !item.IsNullable() {
-			break
-		}
-	}
-	return names
-}
+func (s *SeqExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // LabeledExpr is an expression that has an associated label. Code blocks
 // can access the value of the expression using that label, that becomes
@@ -415,32 +329,29 @@ type LabeledExpr struct {
 var _ Expression = (*LabeledExpr)(nil)
 
 // NewLabeledExpr creates a new labeled expression at the specified position.
-func NewLabeledExpr(p Pos) *LabeledExpr {
-	return &LabeledExpr{p: p}
-}
+func NewLabeledExpr(p Pos) *LabeledExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (l *LabeledExpr) Pos() Pos { return l.p }
+func (l *LabeledExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (l *LabeledExpr) String() string {
-	return fmt.Sprintf("%s: %T{Label: %v, Expr: %v}", l.p, l, l.Label, l.Expr)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (l *LabeledExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (l *LabeledExpr) NullableVisit(rules map[string]*Rule) bool {
-	return l.Expr.NullableVisit(rules)
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsNullable returns the nullable attribute of the node.
-func (l *LabeledExpr) IsNullable() bool {
-	return l.Expr.IsNullable()
-}
+func (l *LabeledExpr) IsNullable() bool { _ = "STUB: not implemented"; return false }
 
 // InitialNames returns names of nodes with which an expression can begin.
-func (l *LabeledExpr) InitialNames() map[string]struct{} {
-	return l.Expr.InitialNames()
-}
+func (l *LabeledExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // AndExpr is a zero-length matcher that is considered a match if the
 // expression it contains is a match.
@@ -450,34 +361,36 @@ type AndExpr struct {
 }
 
 // NewAndExpr creates a new and (&) expression at the specified position.
-func NewAndExpr(p Pos) *AndExpr {
-	return &AndExpr{p: p}
-}
+func NewAndExpr(p Pos) *AndExpr { _ = "STUB: not implemented"; return nil }
 
 var _ Expression = (*AndExpr)(nil)
 
 // Pos returns the starting position of the node.
-func (a *AndExpr) Pos() Pos { return a.p }
+func (a *AndExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (a *AndExpr) String() string {
-	return fmt.Sprintf("%s: %T{Expr: %v}", a.p, a, a.Expr)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (a *AndExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (a *AndExpr) NullableVisit(rules map[string]*Rule) bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// IsNullable returns the nullable attribute of the node.
+	return false
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (a *AndExpr) IsNullable() bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (a *AndExpr) InitialNames() map[string]struct{} {
-	return make(map[string]struct{})
-}
+func (a *AndExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // NotExpr is a zero-length matcher that is considered a match if the
 // expression it contains is not a match.
@@ -489,32 +402,34 @@ type NotExpr struct {
 var _ Expression = (*NotExpr)(nil)
 
 // NewNotExpr creates a new not (!) expression at the specified position.
-func NewNotExpr(p Pos) *NotExpr {
-	return &NotExpr{p: p}
-}
+func NewNotExpr(p Pos) *NotExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (n *NotExpr) Pos() Pos { return n.p }
+func (n *NotExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (n *NotExpr) String() string {
-	return fmt.Sprintf("%s: %T{Expr: %v}", n.p, n, n.Expr)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (n *NotExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (n *NotExpr) NullableVisit(rules map[string]*Rule) bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// IsNullable returns the nullable attribute of the node.
+	return false
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (n *NotExpr) IsNullable() bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (n *NotExpr) InitialNames() map[string]struct{} {
-	return make(map[string]struct{})
-}
+func (n *NotExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // ZeroOrOneExpr is an expression that can be matched zero or one time.
 type ZeroOrOneExpr struct {
@@ -526,32 +441,34 @@ var _ Expression = (*ZeroOrOneExpr)(nil)
 
 // NewZeroOrOneExpr creates a new zero or one expression at the specified
 // position.
-func NewZeroOrOneExpr(p Pos) *ZeroOrOneExpr {
-	return &ZeroOrOneExpr{p: p}
-}
+func NewZeroOrOneExpr(p Pos) *ZeroOrOneExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (z *ZeroOrOneExpr) Pos() Pos { return z.p }
+func (z *ZeroOrOneExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (z *ZeroOrOneExpr) String() string {
-	return fmt.Sprintf("%s: %T{Expr: %v}", z.p, z, z.Expr)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (z *ZeroOrOneExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (z *ZeroOrOneExpr) NullableVisit(rules map[string]*Rule) bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// IsNullable returns the nullable attribute of the node.
+	return false
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (z *ZeroOrOneExpr) IsNullable() bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (z *ZeroOrOneExpr) InitialNames() map[string]struct{} {
-	return z.Expr.InitialNames()
-}
+func (z *ZeroOrOneExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // ZeroOrMoreExpr is an expression that can be matched zero or more times.
 type ZeroOrMoreExpr struct {
@@ -563,32 +480,34 @@ var _ Expression = (*ZeroOrMoreExpr)(nil)
 
 // NewZeroOrMoreExpr creates a new zero or more expression at the specified
 // position.
-func NewZeroOrMoreExpr(p Pos) *ZeroOrMoreExpr {
-	return &ZeroOrMoreExpr{p: p}
-}
+func NewZeroOrMoreExpr(p Pos) *ZeroOrMoreExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (z *ZeroOrMoreExpr) Pos() Pos { return z.p }
+func (z *ZeroOrMoreExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (z *ZeroOrMoreExpr) String() string {
-	return fmt.Sprintf("%s: %T{Expr: %v}", z.p, z, z.Expr)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (z *ZeroOrMoreExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (z *ZeroOrMoreExpr) NullableVisit(rules map[string]*Rule) bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// IsNullable returns the nullable attribute of the node.
+	return false
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (z *ZeroOrMoreExpr) IsNullable() bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (z *ZeroOrMoreExpr) InitialNames() map[string]struct{} {
-	return z.Expr.InitialNames()
-}
+func (z *ZeroOrMoreExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // OneOrMoreExpr is an expression that can be matched one or more times.
 type OneOrMoreExpr struct {
@@ -600,32 +519,34 @@ var _ Expression = (*OneOrMoreExpr)(nil)
 
 // NewOneOrMoreExpr creates a new one or more expression at the specified
 // position.
-func NewOneOrMoreExpr(p Pos) *OneOrMoreExpr {
-	return &OneOrMoreExpr{p: p}
-}
+func NewOneOrMoreExpr(p Pos) *OneOrMoreExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (o *OneOrMoreExpr) Pos() Pos { return o.p }
+func (o *OneOrMoreExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (o *OneOrMoreExpr) String() string {
-	return fmt.Sprintf("%s: %T{Expr: %v}", o.p, o, o.Expr)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (o *OneOrMoreExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (o *OneOrMoreExpr) NullableVisit(rules map[string]*Rule) bool {
+	_ = "STUB: not implemented"
+
+	// IsNullable returns the nullable attribute of the node.
 	return false
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (o *OneOrMoreExpr) IsNullable() bool {
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
 	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (o *OneOrMoreExpr) InitialNames() map[string]struct{} {
-	return o.Expr.InitialNames()
-}
+func (o *OneOrMoreExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // RuleRefExpr is an expression that references a rule by name.
 type RuleRefExpr struct {
@@ -639,39 +560,35 @@ var _ Expression = (*RuleRefExpr)(nil)
 
 // NewRuleRefExpr creates a new rule reference expression at the specified
 // position.
-func NewRuleRefExpr(p Pos) *RuleRefExpr {
-	return &RuleRefExpr{p: p}
-}
+func NewRuleRefExpr(p Pos) *RuleRefExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (r *RuleRefExpr) Pos() Pos { return r.p }
+func (r *RuleRefExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (r *RuleRefExpr) String() string {
-	return fmt.Sprintf("%s: %T{Name: %v}", r.p, r, r.Name)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (r *RuleRefExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (r *RuleRefExpr) NullableVisit(rules map[string]*Rule) bool {
-	item, ok := rules[r.Name.Val]
-	if !ok {
-		// Token or unknown; never empty.
-		r.Nullable = false
-		return false
-	}
-	r.Nullable = item.NullableVisit(rules)
-	return r.Nullable
+	_ = "STUB: not implemented"
+	return false
 }
+
+// Token or unknown; never empty.
 
 // IsNullable returns the nullable attribute of the node.
 func (r *RuleRefExpr) IsNullable() bool {
-	return r.Nullable
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (r *RuleRefExpr) InitialNames() map[string]struct{} {
-	return map[string]struct{}{r.Name.Val: {}}
-}
+func (r *RuleRefExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // StateCodeExpr is an expression which can modify the internal state of the parser.
 type StateCodeExpr struct {
@@ -684,32 +601,34 @@ var _ Expression = (*StateCodeExpr)(nil)
 
 // NewStateCodeExpr creates a new state (#) code expression at the specified
 // position.
-func NewStateCodeExpr(p Pos) *StateCodeExpr {
-	return &StateCodeExpr{p: p}
-}
+func NewStateCodeExpr(p Pos) *StateCodeExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (s *StateCodeExpr) Pos() Pos { return s.p }
+func (s *StateCodeExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (s *StateCodeExpr) String() string {
-	return fmt.Sprintf("%s: %T{Code: %v}", s.p, s, s.Code)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (s *StateCodeExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (s *StateCodeExpr) NullableVisit(rules map[string]*Rule) bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// IsNullable returns the nullable attribute of the node.
+	return false
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (s *StateCodeExpr) IsNullable() bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (s *StateCodeExpr) InitialNames() map[string]struct{} {
-	return make(map[string]struct{})
-}
+func (s *StateCodeExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // AndCodeExpr is a zero-length matcher that is considered a match if the
 // code block returns true.
@@ -723,32 +642,34 @@ var _ Expression = (*AndCodeExpr)(nil)
 
 // NewAndCodeExpr creates a new and (&) code expression at the specified
 // position.
-func NewAndCodeExpr(p Pos) *AndCodeExpr {
-	return &AndCodeExpr{p: p}
-}
+func NewAndCodeExpr(p Pos) *AndCodeExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (a *AndCodeExpr) Pos() Pos { return a.p }
+func (a *AndCodeExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (a *AndCodeExpr) String() string {
-	return fmt.Sprintf("%s: %T{Code: %v}", a.p, a, a.Code)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (a *AndCodeExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (a *AndCodeExpr) NullableVisit(rules map[string]*Rule) bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// IsNullable returns the nullable attribute of the node.
+	return false
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (a *AndCodeExpr) IsNullable() bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (a *AndCodeExpr) InitialNames() map[string]struct{} {
-	return make(map[string]struct{})
-}
+func (a *AndCodeExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // NotCodeExpr is a zero-length matcher that is considered a match if the
 // code block returns false.
@@ -762,32 +683,34 @@ var _ Expression = (*NotCodeExpr)(nil)
 
 // NewNotCodeExpr creates a new not (!) code expression at the specified
 // position.
-func NewNotCodeExpr(p Pos) *NotCodeExpr {
-	return &NotCodeExpr{p: p}
-}
+func NewNotCodeExpr(p Pos) *NotCodeExpr { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (n *NotCodeExpr) Pos() Pos { return n.p }
+func (n *NotCodeExpr) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (n *NotCodeExpr) String() string {
-	return fmt.Sprintf("%s: %T{Code: %v}", n.p, n, n.Code)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (n *NotCodeExpr) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (n *NotCodeExpr) NullableVisit(rules map[string]*Rule) bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// IsNullable returns the nullable attribute of the node.
+	return false
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (n *NotCodeExpr) IsNullable() bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
+	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (n *NotCodeExpr) InitialNames() map[string]struct{} {
-	return make(map[string]struct{})
-}
+func (n *NotCodeExpr) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // LitMatcher is a string literal matcher. The value to match may be a
 // double-quoted string, a single-quoted single character, or a back-tick
@@ -801,33 +724,34 @@ var _ Expression = (*LitMatcher)(nil)
 
 // NewLitMatcher creates a new literal matcher at the specified position and
 // with the specified value.
-func NewLitMatcher(p Pos, v string) *LitMatcher {
-	return &LitMatcher{posValue: posValue{p: p, Val: v}}
-}
+func NewLitMatcher(p Pos, v string) *LitMatcher { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (l *LitMatcher) Pos() Pos { return l.p }
+func (l *LitMatcher) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (l *LitMatcher) String() string {
-	return fmt.Sprintf("%s: %T{Val: %q, IgnoreCase: %t}", l.p, l, l.Val, l.IgnoreCase)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (l *LitMatcher) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (l *LitMatcher) NullableVisit(rules map[string]*Rule) bool {
-	return l.IsNullable()
+	_ = "STUB: not implemented"
+	return false
+
+	// IsNullable returns the nullable attribute of the node.
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (l *LitMatcher) IsNullable() bool {
-	// The string token '' is considered empty.
-	return len(l.Val) == 0
+	_ = "STUB: not implemented"
+	// The string token ” is considered empty.
+	return false
 }
 
 // InitialNames returns names of nodes with which an expression can begin.
-func (l *LitMatcher) InitialNames() map[string]struct{} {
-	return make(map[string]struct{})
-}
+func (l *LitMatcher) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // CharClassMatcher is a character class matcher. The value to match must
 // be one of the specified characters, in a range of characters, or in the
@@ -847,138 +771,44 @@ var _ Expression = (*CharClassMatcher)(nil)
 // position and with the specified raw value. It parses the raw value into
 // the list of characters, ranges and Unicode classes.
 func NewCharClassMatcher(p Pos, raw string) *CharClassMatcher {
-	c := &CharClassMatcher{posValue: posValue{p: p, Val: raw}}
-	c.parse()
-	return c
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (c *CharClassMatcher) parse() {
-	raw := c.Val
-	c.IgnoreCase = strings.HasSuffix(raw, "i")
-	if c.IgnoreCase {
-		raw = raw[:len(raw)-1]
-	}
+func (c *CharClassMatcher) parse() { _ = "STUB: not implemented"; return }
 
-	// "unquote" the character classes
-	raw = raw[1 : len(raw)-1]
-	if len(raw) == 0 {
-		return
-	}
+// "unquote" the character classes
 
-	c.Inverted = raw[0] == '^'
-	if c.Inverted {
-		raw = raw[1:]
-		if len(raw) == 0 {
-			return
-		}
-	}
+// content of char class is necessarily valid, so escapes are correct
 
-	// content of char class is necessarily valid, so escapes are correct
-	r := strings.NewReader(raw)
-	var chars []rune
-	var buf bytes.Buffer
-outer:
-	for {
-		rn, _, err := r.ReadRune()
-		if err != nil {
-			break outer
-		}
+// extract ranges and chars
 
-		consumeN := 0
-		switch rn {
-		case '\\':
-			rn, _, _ := r.ReadRune()
-			switch rn {
-			case ']':
-				chars = append(chars, rn)
-				continue
-
-			case 'p':
-				rn, _, _ := r.ReadRune()
-				if rn == '{' {
-					buf.Reset()
-					for {
-						rn, _, _ := r.ReadRune()
-						if rn == '}' {
-							break
-						}
-						buf.WriteRune(rn)
-					}
-					c.UnicodeClasses = append(c.UnicodeClasses, buf.String())
-				} else {
-					c.UnicodeClasses = append(c.UnicodeClasses, string(rn))
-				}
-				continue
-
-			case 'x':
-				consumeN = 2
-			case 'u':
-				consumeN = 4
-			case 'U':
-				consumeN = 8
-			case '0', '1', '2', '3', '4', '5', '6', '7':
-				consumeN = 2
-			}
-
-			buf.Reset()
-			buf.WriteRune(rn)
-			for i := 0; i < consumeN; i++ {
-				rn, _, _ := r.ReadRune()
-				buf.WriteRune(rn)
-			}
-			rn, _, _, _ = strconv.UnquoteChar("\\"+buf.String(), 0)
-			chars = append(chars, rn)
-
-		default:
-			chars = append(chars, rn)
-		}
-	}
-
-	// extract ranges and chars
-	inRange, wasRange := false, false
-	for i, r := range chars {
-		if inRange {
-			c.Ranges = append(c.Ranges, r)
-			inRange = false
-			wasRange = true
-			continue
-		}
-
-		if r == '-' && !wasRange && len(c.Chars) > 0 && i < len(chars)-1 {
-			inRange = true
-			wasRange = false
-			// start of range is the last Char added
-			c.Ranges = append(c.Ranges, c.Chars[len(c.Chars)-1])
-			c.Chars = c.Chars[:len(c.Chars)-1]
-			continue
-		}
-		wasRange = false
-		c.Chars = append(c.Chars, r)
-	}
-}
+// start of range is the last Char added
 
 // Pos returns the starting position of the node.
-func (c *CharClassMatcher) Pos() Pos { return c.p }
+func (c *CharClassMatcher) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (c *CharClassMatcher) String() string {
-	return fmt.Sprintf("%s: %T{Val: %q, IgnoreCase: %t, Inverted: %t}",
-		c.p, c, c.Val, c.IgnoreCase, c.Inverted)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (c *CharClassMatcher) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (c *CharClassMatcher) NullableVisit(rules map[string]*Rule) bool {
-	return c.IsNullable()
+	_ = "STUB: not implemented"
+	return false
+
+	// IsNullable returns the nullable attribute of the node.
 }
 
-// IsNullable returns the nullable attribute of the node.
-func (c *CharClassMatcher) IsNullable() bool {
-	return len(c.Chars) == 0 && len(c.Ranges) == 0 && len(c.UnicodeClasses) == 0
-}
+func (c *CharClassMatcher) IsNullable() bool { _ = "STUB: not implemented"; return false }
 
 // InitialNames returns names of nodes with which an expression can begin.
 func (c *CharClassMatcher) InitialNames() map[string]struct{} {
-	return make(map[string]struct{})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AnyMatcher is a matcher that matches any character except end-of-file.
@@ -990,32 +820,34 @@ var _ Expression = (*AnyMatcher)(nil)
 
 // NewAnyMatcher creates a new any matcher at the specified position. The
 // value is provided for completeness' sake, but it is always the dot.
-func NewAnyMatcher(p Pos, v string) *AnyMatcher {
-	return &AnyMatcher{posValue{p, v}}
-}
+func NewAnyMatcher(p Pos, v string) *AnyMatcher { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (a *AnyMatcher) Pos() Pos { return a.p }
+func (a *AnyMatcher) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (a *AnyMatcher) String() string {
-	return fmt.Sprintf("%s: %T{Val: %q}", a.p, a, a.Val)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (a *AnyMatcher) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (a *AnyMatcher) NullableVisit(rules map[string]*Rule) bool {
+	_ = "STUB: not implemented"
+
+	// IsNullable returns the nullable attribute of the node.
 	return false
 }
 
-// IsNullable returns the nullable attribute of the node.
 func (a *AnyMatcher) IsNullable() bool {
+	_ = "STUB: not implemented"
+
+	// InitialNames returns names of nodes with which an expression can begin.
 	return false
 }
 
-// InitialNames returns names of nodes with which an expression can begin.
-func (a *AnyMatcher) InitialNames() map[string]struct{} {
-	return make(map[string]struct{})
-}
+func (a *AnyMatcher) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // CodeBlock represents a code block.
 type CodeBlock struct {
@@ -1026,32 +858,29 @@ var _ Expression = (*CodeBlock)(nil)
 
 // NewCodeBlock creates a new code block at the specified position and with
 // the specified value. The value includes the outer braces.
-func NewCodeBlock(p Pos, code string) *CodeBlock {
-	return &CodeBlock{posValue{p, code}}
-}
+func NewCodeBlock(p Pos, code string) *CodeBlock { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (c *CodeBlock) Pos() Pos { return c.p }
+func (c *CodeBlock) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (c *CodeBlock) String() string {
-	return fmt.Sprintf("%s: %T{Val: %q}", c.p, c, c.Val)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (c *CodeBlock) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (c *CodeBlock) NullableVisit(rules map[string]*Rule) bool {
-	panic("NullableVisit should not be called on the CodeBlock")
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsNullable returns the nullable attribute of the node.
-func (c *CodeBlock) IsNullable() bool {
-	panic("IsNullable should not be called on the CodeBlock")
-}
+func (c *CodeBlock) IsNullable() bool { _ = "STUB: not implemented"; return false }
 
 // InitialNames returns names of nodes with which an expression can begin.
-func (c *CodeBlock) InitialNames() map[string]struct{} {
-	panic("InitialNames should not be called on the CodeBlock")
-}
+func (c *CodeBlock) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // Identifier represents an identifier.
 type Identifier struct {
@@ -1062,32 +891,29 @@ var _ Expression = (*Identifier)(nil)
 
 // NewIdentifier creates a new identifier at the specified position and
 // with the specified name.
-func NewIdentifier(p Pos, name string) *Identifier {
-	return &Identifier{posValue{p: p, Val: name}}
-}
+func NewIdentifier(p Pos, name string) *Identifier { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (i *Identifier) Pos() Pos { return i.p }
+func (i *Identifier) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (i *Identifier) String() string {
-	return fmt.Sprintf("%s: %T{Val: %q}", i.p, i, i.Val)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (i *Identifier) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (i *Identifier) NullableVisit(rules map[string]*Rule) bool {
-	panic("NullableVisit should not be called on the Identifier")
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsNullable returns the nullable attribute of the node.
-func (i *Identifier) IsNullable() bool {
-	panic("IsNullable should not be called on the Identifier")
-}
+func (i *Identifier) IsNullable() bool { _ = "STUB: not implemented"; return false }
 
 // InitialNames returns names of nodes with which an expression can begin.
-func (i *Identifier) InitialNames() map[string]struct{} {
-	panic("InitialNames should not be called on the Identifier")
-}
+func (i *Identifier) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 // StringLit represents a string literal.
 type StringLit struct {
@@ -1098,32 +924,29 @@ var _ Expression = (*StringLit)(nil)
 
 // NewStringLit creates a new string literal at the specified position and
 // with the specified value.
-func NewStringLit(p Pos, val string) *StringLit {
-	return &StringLit{posValue{p: p, Val: val}}
-}
+func NewStringLit(p Pos, val string) *StringLit { _ = "STUB: not implemented"; return nil }
 
 // Pos returns the starting position of the node.
-func (s *StringLit) Pos() Pos { return s.p }
+func (s *StringLit) Pos() Pos {
+	_ = "STUB: not implemented"
 
-// String returns the textual representation of a node.
-func (s *StringLit) String() string {
-	return fmt.Sprintf("%s: %T{Val: %q}", s.p, s, s.Val)
+	// String returns the textual representation of a node.
+	return *new(Pos)
 }
+
+func (s *StringLit) String() string { _ = "STUB: not implemented"; return "" }
 
 // NullableVisit recursively determines whether an object is nullable.
 func (s *StringLit) NullableVisit(rules map[string]*Rule) bool {
-	panic("NullableVisit should not be called on the StringLit")
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsNullable returns the nullable attribute of the node.
-func (s *StringLit) IsNullable() bool {
-	panic("IsNullable should not be called on the StringLit")
-}
+func (s *StringLit) IsNullable() bool { _ = "STUB: not implemented"; return false }
 
 // InitialNames returns names of nodes with which an expression can begin.
-func (s *StringLit) InitialNames() map[string]struct{} {
-	panic("InitialNames should not be called on the StringLit")
-}
+func (s *StringLit) InitialNames() map[string]struct{} { _ = "STUB: not implemented"; return nil }
 
 type posValue struct {
 	p   Pos

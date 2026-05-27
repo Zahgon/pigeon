@@ -1,11 +1,9 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 )
 
 func main() {
@@ -43,16 +41,11 @@ type ProgramNode struct {
 }
 
 func newProgramNode(stmts StatementsNode, ret ReturnNode) (ProgramNode, error) {
-	return ProgramNode{stmts, ret}, nil
+	_ = "STUB: not implemented"
+	return *new(ProgramNode), nil
 }
 
-func (n ProgramNode) exec() (int, error) {
-	err := n.statements.exec()
-	if err != nil {
-		return 0, err
-	}
-	return n.ret.exec()
-}
+func (n ProgramNode) exec() (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // StatementsNode is a list of statement
 type StatementsNode struct {
@@ -60,23 +53,11 @@ type StatementsNode struct {
 }
 
 func newStatementsNode(stmts any) (StatementsNode, error) {
-	st := toAnySlice(stmts)
-	ex := make([]Statement, len(st))
-	for i, v := range st {
-		ex[i] = v.(Statement)
-	}
-	return StatementsNode{ex}, nil
+	_ = "STUB: not implemented"
+	return *new(StatementsNode), nil
 }
 
-func (n StatementsNode) exec() error {
-	for _, v := range n.statements {
-		err := v.exec()
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
+func (n StatementsNode) exec() error { _ = "STUB: not implemented"; return nil }
 
 // ReturnNode return value to the caller.
 type ReturnNode struct {
@@ -84,13 +65,11 @@ type ReturnNode struct {
 }
 
 func newReturnNode(arg IdentifierNode) (ReturnNode, error) {
-	return ReturnNode{arg}, nil
+	_ = "STUB: not implemented"
+	return *new(ReturnNode), nil
 }
 
-func (n ReturnNode) exec() (int, error) {
-	v, err := n.arg.exec()
-	return v, err
-}
+func (n ReturnNode) exec() (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // IfNode controls conditional branching.
 type IfNode struct {
@@ -99,20 +78,11 @@ type IfNode struct {
 }
 
 func newIfNode(arg LogicalExpressionNode, stmts StatementsNode) (IfNode, error) {
-	return IfNode{arg, stmts}, nil
+	_ = "STUB: not implemented"
+	return *new(IfNode), nil
 }
 
-func (n IfNode) exec() error {
-	cond, err := n.arg.exec()
-	if err != nil {
-		return err
-	}
-	if cond {
-		err := n.statements.exec()
-		return err
-	}
-	return nil
-}
+func (n IfNode) exec() error { _ = "STUB: not implemented"; return nil }
 
 // AssignmentNode gives a value to a variable
 type AssignmentNode struct {
@@ -121,17 +91,11 @@ type AssignmentNode struct {
 }
 
 func newAssignmentNode(lvalue IdentifierNode, rvalue AdditiveExpressionNode) (AssignmentNode, error) {
-	return AssignmentNode{lvalue.val, rvalue}, nil
+	_ = "STUB: not implemented"
+	return *new(AssignmentNode), nil
 }
 
-func (n AssignmentNode) exec() error {
-	v, err := n.rvalue.exec()
-	if err != nil {
-		return err
-	}
-	lvalues[n.lvalue] = v
-	return nil
-}
+func (n AssignmentNode) exec() error { _ = "STUB: not implemented"; return nil }
 
 // LogicalExpressionNode is a logical expression
 type LogicalExpressionNode struct {
@@ -139,14 +103,11 @@ type LogicalExpressionNode struct {
 }
 
 func newLogicalExpressionNode(expr PrimaryExpressionNode) (LogicalExpressionNode, error) {
-	return LogicalExpressionNode{expr}, nil
+	_ = "STUB: not implemented"
+	return *new(LogicalExpressionNode), nil
 }
 
-func (n LogicalExpressionNode) exec() (bool, error) {
-	ret, err := n.expr.exec()
-	b := ret != 0
-	return b, err
-}
+func (n LogicalExpressionNode) exec() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // AdditiveExpressionNode is a additive expression
 type AdditiveExpressionNode struct {
@@ -156,50 +117,11 @@ type AdditiveExpressionNode struct {
 }
 
 func newAdditiveExpressionNode(arg PrimaryExpressionNode, rest any) (AdditiveExpressionNode, error) {
-	var a AdditiveExpressionNode
-	var arg1 any = arg
-
-	restSl := toAnySlice(rest)
-	if len(restSl) == 0 {
-		zero, _ := newIntegerNode("0")
-		arg2, _ := newPrimaryExpressionNode(zero)
-		a = AdditiveExpressionNode{arg1, arg2, "+"}
-	}
-	for _, v := range restSl {
-		restExpr := toAnySlice(v)
-		arg2 := restExpr[3].(PrimaryExpressionNode)
-		op := restExpr[1].(string)
-		a = AdditiveExpressionNode{arg1, arg2, op}
-		arg1 = a
-	}
-	return a, nil
+	_ = "STUB: not implemented"
+	return *new(AdditiveExpressionNode), nil
 }
 
-func (n AdditiveExpressionNode) exec() (int, error) {
-	var v, varg1, varg2 int
-	var err error
-	switch n.arg1.(type) {
-	case PrimaryExpressionNode:
-		varg1, err = n.arg1.(PrimaryExpressionNode).exec()
-	case AdditiveExpressionNode:
-		varg1, err = n.arg1.(AdditiveExpressionNode).exec()
-	default:
-		return 0, errors.New("arg1 has invalid node type while exec AdditiveExpression")
-	}
-	if err != nil {
-		return varg1, err
-	}
-	varg2, err = n.arg2.exec()
-	switch n.op {
-	case "+":
-		v = varg1 + varg2
-	case "-":
-		v = varg1 - varg2
-	default:
-		return 0, errors.New("invalid operation while exec AdditiveExpression")
-	}
-	return v, err
-}
+func (n AdditiveExpressionNode) exec() (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // PrimaryExpressionNode is a basic element
 type PrimaryExpressionNode struct {
@@ -207,22 +129,11 @@ type PrimaryExpressionNode struct {
 }
 
 func newPrimaryExpressionNode(arg any) (PrimaryExpressionNode, error) {
-	return PrimaryExpressionNode{arg}, nil
+	_ = "STUB: not implemented"
+	return *new(PrimaryExpressionNode), nil
 }
 
-func (n PrimaryExpressionNode) exec() (int, error) {
-	var v int
-	var err error
-	switch n.arg.(type) {
-	case IntegerNode:
-		v, err = n.arg.(IntegerNode).exec()
-	case IdentifierNode:
-		v, err = n.arg.(IdentifierNode).exec()
-	default:
-		return 0, errors.New("invalid operation while exec AdditiveExpression")
-	}
-	return v, err
-}
+func (n PrimaryExpressionNode) exec() (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // IntegerNode is a integer number
 type IntegerNode struct {
@@ -230,27 +141,24 @@ type IntegerNode struct {
 }
 
 func newIntegerNode(val string) (IntegerNode, error) {
-	v, err := strconv.ParseInt(val, 0, 64)
-	return IntegerNode{int(v)}, err
+	_ = "STUB: not implemented"
+	return *new(IntegerNode), nil
 }
 
 func (n IntegerNode) exec() (int, error) {
-	return n.val, nil
+	_ = "STUB: not implemented"
+
+	// IdentifierNode is a reference to variable
+	return 0, nil
 }
 
-// IdentifierNode is a reference to variable
 type IdentifierNode struct {
 	val string
 }
 
 func newIdentifierNode(val string) (IdentifierNode, error) {
-	return IdentifierNode{val}, nil
+	_ = "STUB: not implemented"
+	return *new(IdentifierNode), nil
 }
 
-func (n IdentifierNode) exec() (int, error) {
-	v, ok := lvalues[n.val]
-	if !ok {
-		return 0, errors.New("Identifier " + n.val + " not defined")
-	}
-	return v, nil
-}
+func (n IdentifierNode) exec() (int, error) { _ = "STUB: not implemented"; return 0, nil }

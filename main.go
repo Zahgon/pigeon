@@ -1,14 +1,11 @@
 package main
 
 import (
-	"bufio"
 	"bytes"
-	"errors"
 	"flag"
 	"fmt"
 	"io"
 	"os"
-	"strconv"
 	"strings"
 
 	"golang.org/x/tools/imports"
@@ -24,15 +21,9 @@ var exit = os.Exit
 // list of rule names. It implements flag.Value.
 type ruleNamesFlag []string
 
-func (r *ruleNamesFlag) String() string {
-	return fmt.Sprint(*r)
-}
+func (r *ruleNamesFlag) String() string { _ = "STUB: not implemented"; return "" }
 
-func (r *ruleNamesFlag) Set(value string) error {
-	names := strings.Split(value, ",")
-	*r = append(*r, names...)
-	return nil
-}
+func (r *ruleNamesFlag) Set(value string) error { _ = "STUB: not implemented"; return nil }
 
 func main() {
 	fs := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
@@ -219,83 +210,38 @@ See https://godoc.org/github.com/mna/pigeon for more information.
 `
 
 // usage prints the help page of the command-line tool.
-func usage() {
-	fmt.Printf(usagePage, os.Args[0])
-}
+func usage() { _ = "STUB: not implemented"; return }
 
 // argError prints an error message to stderr, prints the command usage
 // and exits with the specified exit code.
-func argError(exitCode int, msg string, args ...any) {
-	fmt.Fprintf(os.Stderr, msg, args...)
-	fmt.Fprintln(os.Stderr)
-	usage()
-	exit(exitCode)
-}
+func argError(exitCode int, msg string, args ...any) { _ = "STUB: not implemented"; return }
 
 // input gets the name and reader to get input text from.
 func input(filename string) (nm string, rc io.ReadCloser) {
-	nm = "stdin"
-	inf := os.Stdin
-	if filename != "" {
-		f, err := os.Open(filename)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
-			exit(2)
-		}
-		inf = f
-		nm = filename
-	}
-	r := bufio.NewReader(inf)
-	return nm, makeReadCloser(r, inf)
+	_ = "STUB: not implemented"
+	return "", *new(io.ReadCloser)
 }
 
 // output gets the writer to write the generated parser to.
-func output(filename string) io.WriteCloser {
-	out := os.Stdout
-	if filename != "" {
-		f, err := os.Create(filename)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
-			exit(4)
-		}
-		out = f
-	}
-	return out
-}
+func output(filename string) io.WriteCloser { _ = "STUB: not implemented"; return *new(io.WriteCloser) }
 
 // create a ReadCloser that reads from r and closes c.
 func makeReadCloser(r io.Reader, c io.Closer) io.ReadCloser {
-	rc := struct {
-		io.Reader
-		io.Closer
-	}{r, c}
-	return io.ReadCloser(rc)
+	_ = "STUB: not implemented"
+	return *new(io.ReadCloser)
 }
 
 // astPos is a helper method for the PEG grammar parser. It returns the
 // position of the current match as an ast.Pos.
-func (c *current) astPos() ast.Pos {
-	return ast.Pos{Line: c.pos.line, Col: c.pos.col, Off: c.pos.offset}
-}
+func (c *current) astPos() ast.Pos { _ = "STUB: not implemented"; return *new(ast.Pos) }
 
 // toAnySlice is a helper function for the PEG grammar parser. It converts
 // v to a slice of empty interfaces.
-func toAnySlice(v any) []any {
-	if v == nil {
-		return nil
-	}
-	return v.([]any)
-}
+func toAnySlice(v any) []any { _ = "STUB: not implemented"; return nil }
 
 // validateUnicodeEscape checks that the provided escape sequence is a
 // valid Unicode escape sequence.
 func validateUnicodeEscape(escape, errMsg string) (any, error) {
-	r, _, _, err := strconv.UnquoteChar("\\"+escape, '"')
-	if err != nil {
-		return nil, errors.New(errMsg)
-	}
-	if 0xD800 <= r && r <= 0xDFFF {
-		return nil, errors.New(errMsg)
-	}
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(any), nil
 }

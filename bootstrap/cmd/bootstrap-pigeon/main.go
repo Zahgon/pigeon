@@ -105,13 +105,6 @@ func main() {
 	}
 }
 
-func (c *current) astPos() ast.Pos {
-	return ast.Pos{Line: c.pos.line, Col: c.pos.col, Off: c.pos.offset}
-}
+func (c *current) astPos() ast.Pos { _ = "STUB: not implemented"; return *new(ast.Pos) }
 
-func toAnySlice(v any) []any {
-	if v == nil {
-		return nil
-	}
-	return v.([]any)
-}
+func toAnySlice(v any) []any { _ = "STUB: not implemented"; return nil }

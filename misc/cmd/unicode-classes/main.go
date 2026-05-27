@@ -43,14 +43,6 @@ func main() {
 // grammar (where longer classes had to come first).
 type lenSorter []string
 
-func (l lenSorter) Len() int      { return len(l) }
-func (l lenSorter) Swap(i, j int) { l[i], l[j] = l[j], l[i] }
-func (l lenSorter) Less(i, j int) bool {
-	li, lj := len(l[i]), len(l[j])
-	if lj < li {
-		return true
-	} else if li < lj {
-		return false
-	}
-	return l[j] < l[i]
-}
+func (l lenSorter) Len() int           { _ = "STUB: not implemented"; return 0 }
+func (l lenSorter) Swap(i, j int)      { _ = "STUB: not implemented"; return }
+func (l lenSorter) Less(i, j int) bool { _ = "STUB: not implemented"; return false }

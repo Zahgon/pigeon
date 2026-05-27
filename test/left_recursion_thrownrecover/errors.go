@@ -7,10 +7,12 @@ type ErrorLister interface {
 }
 
 func (e errList) Errors() []error {
-	return e
+	_ = "STUB: not implemented"
+
+	// ParserError is the public interface to errors of type parserError.
+	return nil
 }
 
-// ParserError is the public interface to errors of type parserError.
 type ParserError interface {
 	Error() string
 	InnerError() error
@@ -18,14 +20,8 @@ type ParserError interface {
 	Expected() []string
 }
 
-func (p *parserError) InnerError() error {
-	return p.Inner
-}
+func (p *parserError) InnerError() error { _ = "STUB: not implemented"; return nil }
 
-func (p *parserError) Pos() (line, col, offset int) {
-	return p.pos.line, p.pos.col, p.pos.offset
-}
+func (p *parserError) Pos() (line, col, offset int) { _ = "STUB: not implemented"; return 0, 0, 0 }
 
-func (p *parserError) Expected() []string {
-	return p.expected
-}
+func (p *parserError) Expected() []string { _ = "STUB: not implemented"; return nil }

@@ -4,9 +4,7 @@
 package main
 
 import (
-	"fmt"
 	"os"
-	"strings"
 )
 
 const (
@@ -23,31 +21,7 @@ var %s = ` + "`"
 	eol = "\n"
 )
 
-func generateFile(source, dest, varname string) {
-	staticCode, err := os.ReadFile(source)
-	if err != nil {
-		panic(err)
-	}
-
-	lines := strings.Split(string(staticCode), eol)
-	keep := false
-	dstLines := make([]string, 0, len(lines))
-	dstLines = append(dstLines, strings.Split(fmt.Sprintf(header, varname), eol)...)
-	for _, line := range lines {
-		if keep {
-			dstLines = append(dstLines, line)
-		}
-		if line == delimiter {
-			keep = true
-		}
-	}
-	dstLines = append(dstLines, strings.Split(footer, eol)...)
-
-	err = os.WriteFile(dest, []byte(strings.Join(dstLines, eol)+eol), 0644)
-	if err != nil {
-		panic(err)
-	}
-}
+func generateFile(source, dest, varname string) { _ = "STUB: not implemented"; return }
 
 func main() {
 	if len(os.Args) > 1 && os.Args[1] == "--" {

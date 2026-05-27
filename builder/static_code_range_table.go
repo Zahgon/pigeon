@@ -3,22 +3,10 @@
 package builder
 
 import (
-	"fmt"
 	"unicode"
 )
 
 // IMPORTANT: All code below this line is added to the parser as static code
-func rangeTable(class string) *unicode.RangeTable {
-	if rt, ok := unicode.Categories[class]; ok {
-		return rt
-	}
-	if rt, ok := unicode.Properties[class]; ok {
-		return rt
-	}
-	if rt, ok := unicode.Scripts[class]; ok {
-		return rt
-	}
+func rangeTable(class string) *unicode.RangeTable { _ = "STUB: not implemented"; return nil }
 
-	// cannot happen
-	panic(fmt.Sprintf("invalid Unicode class: %s", class))
-}
+// cannot happen

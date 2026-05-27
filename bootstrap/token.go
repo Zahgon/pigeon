@@ -1,8 +1,6 @@
 package bootstrap
 
 import (
-	"fmt"
-
 	"github.com/mna/pigeon/ast"
 )
 
@@ -66,12 +64,7 @@ var lookup = map[tid]string{
 	slash:       "slash",
 }
 
-func (t tid) String() string {
-	if s, ok := lookup[t]; ok {
-		return s
-	}
-	return fmt.Sprintf("tid(%d)", t)
-}
+func (t tid) String() string { _ = "STUB: not implemented"; return "" }
 
 var blacklistedIdents = map[string]struct{}{
 	// Go keywords http://golang.org/ref/spec#Keywords
@@ -157,10 +150,4 @@ type Token struct {
 
 var tokenStringLen = 50
 
-func (t Token) String() string {
-	v := t.lit
-	if len(v) > tokenStringLen {
-		v = v[:tokenStringLen/2] + "[...]" + v[len(v)-(tokenStringLen/2):]
-	}
-	return fmt.Sprintf("%s: %s %q", t.pos, t.id, v)
-}
+func (t Token) String() string { _ = "STUB: not implemented"; return "" }
